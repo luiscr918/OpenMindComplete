@@ -1,0 +1,31 @@
+services:
+  # Servicio 1: La Base de Datos
+  db:
+    image: postgres:15-alpine
+    container_name: openmind_db
+    ports:
+      - "5432:5432" # Mapeamos el puerto para poder ver la BD desde la pc
+    environment:
+      POSTGRES_DB: open_mind
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persistencia de datos
+
+  # Servicio 2: Aplicación Spring Boot
+  app:
+    build: ./OpenMindBack
+    container_name: openmind_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db # Espera a que la DB inicie (aunque no garantiza que esté lista para recibir conexiones)
+    environment:
+      # Sobrescribimos la URL para usar 'db' en lugar de 'localhost'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/open_mind
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+
+# Definimos el volumen para que no pierdas los datos al apagar
+volumes:
+  postgres_data:
