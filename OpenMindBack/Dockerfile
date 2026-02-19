@@ -1,15 +1,28 @@
-# Usamos una imagen ligera de Java 21
-FROM eclipse-temurin:21-jdk-alpine
+# -------- ETAPA 1: BUILD --------
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
 
-# Creamos una carpeta de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiamos el archivo .jar generado por Maven
-# (El asterisco * ayuda a que no importe la versión exacta del nombre)
-COPY target/OpenMind-0.0.1-SNAPSHOT.jar app.jar
+# Copiamos pom.xml primero
+COPY pom.xml .
 
-# Exponemos el puerto 8080
+# Descargamos dependencias
+RUN mvn dependency:go-offline
+
+# Copiamos el código fuente
+COPY src ./src
+
+# Construimos el jar
+RUN mvn clean package -DskipTests
+
+# -------- ETAPA 2: RUNTIME --------
+FROM eclipse-temurin:21-jdk-alpine
+
+WORKDIR /app
+
+# Copiamos el jar desde la etapa builder
+COPY --from=builder /app/target/*.jar app.jar
+
 EXPOSE 8080
 
-# Ejecutamos la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
