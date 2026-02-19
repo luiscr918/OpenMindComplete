@@ -1,0 +1,61 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- Logo -->
+    <div class="nav-logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+      <span class="logo-text">Open Mind</span>
+    </div>
+
+    <!-- Menu Hamburguesa -->
+    <button class="menu-toggle" (click)="toggleMenu()" [class.active]="menuAbierto">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Navegación Principal -->
+    <ul class="nav-menu" [class.active]="menuAbierto">
+      <!-- Elementos públicos -->
+      <li class="nav-item">
+        <a href="#inicio" class="nav-link" (click)="cerrarMenu()">Inicio</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#libros" class="nav-link" (click)="cerrarMenu()">Libros</a>
+      </li>
+
+      <li class="nav-item">
+        <a href="#contacto" class="nav-link" (click)="cerrarMenu()">Contacto</a>
+      </li>
+
+      <!-- Elementos solo si está logueado -->
+      <ng-container *ngIf="isLoggedIn">
+        <li class="nav-item">
+          <a href="#mis-prestamos" class="nav-link" (click)="cerrarMenu()">Mis Préstamos</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#mi-perfil" class="nav-link" (click)="cerrarMenu()">Mi Perfil</a>
+        </li>
+      </ng-container>
+
+      <!-- Botones de autenticación -->
+      <li class="nav-item nav-buttons">
+        <ng-container *ngIf="!isLoggedIn">
+          <a href="#login" class="btn-login" (click)="cerrarMenu()">Iniciar Sesión</a>
+          <a href="#registro" class="btn-registro" (click)="cerrarMenu()">Registrarse</a>
+        </ng-container>
+
+        <ng-container *ngIf="isLoggedIn">
+          <div class="user-menu">
+            <span class="user-name">{{ usuarioActual?.nombre }}</span>
+            <button class="btn-logout" (click)="logout()">Cerrar Sesión</button>
+          </div>
+        </ng-container>
+      </li>
+    </ul>
+  </div>
+</nav>
