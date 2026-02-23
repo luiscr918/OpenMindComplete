@@ -27,6 +27,7 @@ export class EditLibro {
       descripcion: ['', [Validators.required, Validators.maxLength(500)]],
       portada: ['', [Validators.required]],
       paginas: [1, [Validators.required, Validators.min(1)]],
+      stock: [1, [Validators.required, Validators.min(1)]],
       archivoPdf: ['', [Validators.required]],
     });
   }

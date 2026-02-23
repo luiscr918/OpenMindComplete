@@ -39,13 +39,11 @@ public class Libro {
     private Integer descargasTotales;
 
     private Integer vistasTotales;
+    private Integer stock;
 
     //relacion prestamo
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Prestamo> prestamos;
 
-    //relacion ejemplar
-    @OneToMany (mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ejemplar> ejemplares;
 
 }

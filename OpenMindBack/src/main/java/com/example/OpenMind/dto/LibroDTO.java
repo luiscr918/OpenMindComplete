@@ -17,4 +17,5 @@ public class LibroDTO {
     private String archivoPdf;
     private Integer descargasTotales;
     private Integer vistasTotales;
+    private Integer stock;
 }

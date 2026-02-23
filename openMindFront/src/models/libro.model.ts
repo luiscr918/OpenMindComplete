@@ -8,4 +8,5 @@ export interface Libro {
   archivoPdf: string;
   descargasTotales: number;
   vistasTotales: number;
+  stock:number
 }

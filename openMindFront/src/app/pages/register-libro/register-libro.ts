@@ -24,6 +24,7 @@ export class RegisterLibro implements OnInit {
       descripcion: ['', [Validators.required, Validators.maxLength(500)]],
       portada: ['', [Validators.required]], // URL de la imagen
       paginas: [1, [Validators.required, Validators.min(1)]],
+      stock: [1, [Validators.required, Validators.min(1)]],
       archivoPdf: ['', [Validators.required]] // URL del PDF
     });
   }
