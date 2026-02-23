@@ -6,8 +6,8 @@ WORKDIR /app
 # Copiamos package.json primero
 COPY package*.json ./
 
-# Instalamos dependencias
-RUN npm install
+# Instalamos dependencias usando la bandera para saltar el conflicto
+RUN npm install --legacy-peer-deps
 
 # Copiamos el resto del proyecto
 COPY . .
@@ -21,8 +21,9 @@ FROM nginx:alpine
 # Copiamos el build al servidor nginx
 # Asegúrate que el nombre coincida: AS builder -> --from=builder
 # Y verifica que la carpeta sea 'open-mind-front/browser'
-COPY --from=builder /app/dist/open-mind-front/browser /usr/share/nginx/html
-
+COPY --from=builder /app/dist/openMindFront/browser /usr/share/nginx/html
+# Copiamos nuestra configuración personalizada de Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
