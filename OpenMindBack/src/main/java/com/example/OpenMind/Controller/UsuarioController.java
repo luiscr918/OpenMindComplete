@@ -35,12 +35,18 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public UsuarioDTO actualizarUsuario(@PathVariable Long id,
-                                     @Valid @RequestBody UsuarioDTO usuario) {
+                                        @Valid @RequestBody UsuarioDTO usuario) {
         return usuarioService.actualizarUsuario(id, usuario);
     }
 
     @DeleteMapping("/{id}")
     public void eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
+    }
+
+    //buscar usuario por email
+    @GetMapping("/email/{email}")
+    public UsuarioDTO obtenerUsuarioPorEmail(@PathVariable String email) {
+        return usuarioService.buscarUsuarioPorEmail(email);
     }
 }

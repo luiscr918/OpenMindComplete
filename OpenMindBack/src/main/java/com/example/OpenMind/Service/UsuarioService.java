@@ -4,6 +4,7 @@ import com.example.OpenMind.Entity.Usuario;
 import com.example.OpenMind.Repository.UsuarioRepository;
 import com.example.OpenMind.dto.UsuarioDTO;
 import com.example.OpenMind.mapper.UsuarioMapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,5 +64,11 @@ public class UsuarioService {
             throw new RuntimeException("Usuario no encontrado");
         }
         usuarioRepository.deleteById(id);
+    }
+    @Transactional(readOnly = true) // <--- Optimización de lectura
+    public UsuarioDTO buscarUsuarioPorEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .map(usuarioMapper::toDTO) // <--- Más funcional y limpio
+                .orElseThrow(() -> new EntityNotFoundException("No existe un usuario con el email: " + email));
     }
 }
