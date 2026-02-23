@@ -1,75 +1,48 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface Libro {
-  titulo: string;
-  autor: string;
-  categoria: string;
-  imagen?: string;
-}
-
-
+import { Libro } from '../../../models/libro.model';
+import { LibroService } from '../../services/libro-service';
 @Component({
   selector: 'app-catalogo',
+  standalone: true, // Asegúrate de que sea standalone si no usas módulos
   imports: [CommonModule, FormsModule],
   templateUrl: './catalogo.html',
   styleUrl: './catalogo.css',
 })
-export class Catalogo {
-  terminoBusqueda: string = '';
-  libros: Libro[] = [
-    {
-      titulo: 'Cien Años de Soledad',
-      autor: 'Gabriel García Márquez',
-      categoria: 'Novela',
-      imagen: 'https://images-na.ssl-images-amazon.com/images/I/81oAEEwxBWL.jpg'
-    },
-    {
-      titulo: '1984',
-      autor: 'George Orwell',
-      categoria: 'Distopía',
-      imagen: 'https://images-na.ssl-images-amazon.com/images/I/71kxa1-0mfL.jpg'
-    },
-    {
-      titulo: 'El Principito',
-      autor: 'Antoine de Saint-Exupéry',
-      categoria: 'Ficción',
-      imagen: 'https://i.postimg.cc/8cYQDY58/prin.webp'
-    },
-    {
-      titulo: 'Don Quijote de la Mancha',
-      autor: 'Miguel de Cervantes',
-      categoria: 'Clásico',
-      imagen: 'https://i.postimg.cc/YqXf2HM9/don.webp'
-    },
-    {
-      titulo: 'El Principito',
-      autor: 'Antoine de Saint-Exupéry',
-      categoria: 'Ficción',
-      imagen: 'https://i.postimg.cc/8cYQDY58/prin.webp'
-    },
-    {
-      titulo: 'Don Quijote de la Mancha',
-      autor: 'Miguel de Cervantes',
-      categoria: 'Clásico',
-      imagen: 'https://i.postimg.cc/YqXf2HM9/don.webp'
-    }
-  ];
+export class Catalogo implements OnInit {
+  terminoBusqueda = '';
+  // 1. Definimos libros como una Signal
+  libros = signal<Libro[]>([]);
+  librosFiltrados = signal<Libro[]>([]);
 
-  librosFiltrados: Libro[] = [];
-  constructor() {
-    this.librosFiltrados = this.libros;
+  constructor(private libroService: LibroService) {}
+
+  ngOnInit(): void {
+    this.cargarLibros();
   }
-  filtrarLibros() {
-    const termino = this.terminoBusqueda.toLowerCase();
 
-    this.librosFiltrados = this.libros.filter(libro =>
-      libro.titulo.toLowerCase().includes(termino) ||
-      libro.autor.toLowerCase().includes(termino) ||
-      libro.categoria.toLowerCase().includes(termino)
+  cargarLibros() {
+    this.libroService.getAll().subscribe({
+      next: (data) => {
+        // 2. Seteamos el valor de la Signal
+        this.libros.set(data);
+        this.librosFiltrados.set(data);
+      },
+    });
+  }
+
+  filtrarLibros() {
+    const termino = this.terminoBusqueda.toLowerCase().trim();
+    if (!termino) {
+      this.librosFiltrados.set(this.libros());
+      return;
+    }
+    // 3. Filtramos usando el valor actual de la Signal ()
+    const filtrados = this.libros().filter(
+      (libro) =>
+        libro.titulo.toLowerCase().includes(termino) || libro.autor.toLowerCase().includes(termino),
     );
+    this.librosFiltrados.set(filtrados);
   }
 }
-
-

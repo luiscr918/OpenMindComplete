@@ -1,0 +1,71 @@
+<div class="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+    <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-lg border border-slate-100">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-slate-800">Editar Usuario</h2>
+            <p class="text-slate-500">Modifica los privilegios y datos del perfil</p>
+        </div>
+
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Email (No editable)</label>
+                    <input type="email" formControlName="email"
+                        class="w-full px-4 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-500 cursor-not-allowed outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Rol de Usuario</label>
+                    <select formControlName="rol"
+                        class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                        @for (rol of roles; track rol) {
+                            <option [value]="rol">{{ rol }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700">Nombre Completo</label>
+                <input type="text" formControlName="nombreCompleto"
+                    class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Ocupación</label>
+                    <input type="text" formControlName="ocupacion"
+                        class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Edad</label>
+                    <input type="number" formControlName="edad"
+                        class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700">Intereses</label>
+                <textarea formControlName="intereses" rows="2"
+                    class="w-full px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none resize-none"></textarea>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button type="button" routerLink="/usuarios"
+                    class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-xl transition-all">
+                    Cancelar
+                </button>
+                <button type="submit" [disabled]="editForm.invalid || cargando()"
+                    class="w-2/3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-blue-100 disabled:bg-slate-300">
+                    {{ cargando() ? 'Guardando...' : 'Guardar Cambios' }}
+                </button>
+            </div>
+
+            @if (mensaje()) {
+            <div [ngClass]="mensaje().includes('éxito') ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'"
+                class="p-4 rounded-xl border text-center font-medium animate-pulse">
+                {{ mensaje() }}
+            </div>
+            }
+        </form>
+    </div>
+</div>

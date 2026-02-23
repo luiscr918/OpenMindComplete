@@ -16,7 +16,6 @@ public interface UsuarioMapper {
 
     // Actualización segura de la entidad existente
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "password", ignore = true) // Protegemos la contraseña de sobrescrituras
     @Mapping(target = "prestamos", ignore = true)
     void actualizarDesdeDto(UsuarioDTO dto, @MappingTarget Usuario entidad);
 }

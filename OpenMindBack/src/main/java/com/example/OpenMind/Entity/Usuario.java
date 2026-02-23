@@ -32,12 +32,6 @@ public class Usuario {
     @Column(unique = true)
     private String email;
 
-    @NotNull
-    @Pattern(
-            regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
-            message = "La contraseña debe tener al menos 8 caracteres, incluyendo letras y números"
-    )
-    private String password;
 
     @NotNull
     private String nombreCompleto;

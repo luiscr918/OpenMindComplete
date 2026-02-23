@@ -3,40 +3,34 @@
   <h1>Catálogo de Libros</h1>
 
   <div class="buscador">
-    <input 
-      type="text"
-      placeholder="Buscar libros..."
-      [(ngModel)]="terminoBusqueda"
-      (input)="filtrarLibros()"
-    />
+    <input type="text" placeholder="Buscar por título o descripción..." [(ngModel)]="terminoBusqueda"
+      (input)="filtrarLibros()" />
   </div>
 
   <div class="catalogo-grid">
-
-    <div *ngFor="let libro of librosFiltrados" class="libro-card">
-
+    @for (libro of librosFiltrados(); track libro.id) {
+    <div class="libro-card">
       <div class="portada">
-        <img 
-          [src]="libro.imagen || 'https://via.placeholder.com/200x300?text=Libro'" 
-          alt="Portada del libro"
-        />
+        <img [src]="libro.portada || 'https://via.placeholder.com/200x300?text=Sin+Portada'" alt="Portada" />
       </div>
-
       <div class="info">
         <h3>{{ libro.titulo }}</h3>
-        <p>{{ libro.autor }}</p>
+        <h2>{{ libro.autor }}</h2>
+        <p>{{ libro.paginas }} páginas</p>
       </div>
-
       <div class="acciones">
-        <button>Ver Detalles</button>
+        <button class="btn-detalles">Ver Detalles</button>
       </div>
-
     </div>
-
+    } @empty {
+    <div class="sin-resultados">
+      <p>No se encontraron libros disponibles en este momento.</p>
+    </div>
+    }
   </div>
-
-  <div *ngIf="librosFiltrados.length === 0" class="sin-resultados">
-    No se encontraron libros.
+  @if(librosFiltrados().length === 0){
+  <div class="sin-resultados">
+    <p>No se encontraron libros disponibles en este momento.</p>
   </div>
-
+  }
 </div>

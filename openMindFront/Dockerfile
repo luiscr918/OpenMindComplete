@@ -19,7 +19,9 @@ RUN npm run build -- --configuration production
 FROM nginx:alpine
 
 # Copiamos el build al servidor nginx
-COPY --from=build /app/dist/open-mind-front/browser /usr/share/nginx/html
+# Asegúrate que el nombre coincida: AS builder -> --from=builder
+# Y verifica que la carpeta sea 'open-mind-front/browser'
+COPY --from=builder /app/dist/open-mind-front/browser /usr/share/nginx/html
 
 EXPOSE 80
 

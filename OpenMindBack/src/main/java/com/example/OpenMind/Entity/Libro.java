@@ -20,6 +20,8 @@ public class Libro {
     private Long id;
 
     @NotBlank
+    private String autor;
+    @NotBlank
     @Column(unique = true)
     private String titulo;
 

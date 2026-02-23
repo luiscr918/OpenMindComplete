@@ -26,13 +26,13 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
 
   # Servicio 3: Frontend Angular
-  frontend:
-    build: ./OpenMindFront
-    container_name: openmind_frontend
-    ports:
-      - "4200:80"
-    depends_on:
-      - app
+  #frontend:
+    #build: ./OpenMindFront
+    #container_name: openmind_frontend
+    #ports:
+     # - "4200:80"
+   # depends_on:
+    #  - app
 
 volumes:
   postgres_data:

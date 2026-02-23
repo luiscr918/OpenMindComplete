@@ -5,7 +5,6 @@ export interface Usuario {
   id?: number;
   rol: Rol;
   email: string;
-  password?: string; // opcional porque no siempre viene
   nombreCompleto: string;
   intereses: string;
   edad: number;
