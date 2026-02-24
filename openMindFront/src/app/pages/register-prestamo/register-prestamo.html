@@ -1,0 +1,44 @@
+<!-- Loading -->
+<div *ngIf="cargando" class="flex items-center justify-center h-[60vh]">
+    <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-500 border-t-transparent"></div>
+</div>
+
+<!-- Card -->
+<div *ngIf="!cargando" class="max-w-md mx-auto mt-10">
+    <div class="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
+
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">
+            Registrar préstamo
+        </h2>
+
+        <div class="space-y-2 text-gray-600">
+            <p>
+                <span class="font-medium text-gray-800">Libro:</span>
+                {{ nuevoPrestamo.tituloLibro }}
+            </p>
+
+            <p>
+                <span class="font-medium text-gray-800">Usuario:</span>
+                {{ nuevoPrestamo.nombreUsuario }}
+            </p>
+
+            <p>
+                <span class="font-medium text-gray-800">Fecha:</span>
+                {{ nuevoPrestamo.fechaSalida }}
+            </p>
+        </div>
+
+        <div class="flex gap-3 mt-6">
+            <button (click)="guardarPrestamo()"
+                class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition duration-200">
+                Guardar
+            </button>
+
+            <button (click)="cancelar()"
+                class="flex-1 border border-gray-300 hover:bg-gray-100 py-2 rounded-lg transition duration-200">
+                Cancelar
+            </button>
+        </div>
+
+    </div>
+</div>

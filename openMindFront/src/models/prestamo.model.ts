@@ -4,7 +4,7 @@ export type EstadoPrestamo = 'ACTIVO' | 'DEVUELTO' | 'ATRASADO';
 export interface Prestamo {
   id?: number;
   fechaSalida: string; // LocalDate → string
-  fechaDevolucion: string;
+  fechaDevolucion?: string;
   estadoPrestamo: EstadoPrestamo;
   usuarioId: number;
   nombreUsuario: string;
