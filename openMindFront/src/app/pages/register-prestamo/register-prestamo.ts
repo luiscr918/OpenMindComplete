@@ -92,12 +92,12 @@ nuevoPrestamo: Prestamo = {
   }
 
   guardarPrestamo() {
-    this.prestamoService.create(this.nuevoPrestamo).subscribe({
-      next: () => {
-        alert('Préstamo realizado con éxito');
-        this.router.navigate(['/catalogo']);
-      },
-      error: err => console.error('Error al crear préstamo', err),
-    });
-  }
+  this.prestamoService.create(this.nuevoPrestamo).subscribe({
+    next: () => {
+      // ⭐ sin alert
+      this.router.navigate(['/prestamos']); // ir a lista y ver el nuevo
+    },
+    error: err => console.error('Error al crear préstamo', err),
+  });
+}
 }
