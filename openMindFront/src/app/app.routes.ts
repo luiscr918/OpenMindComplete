@@ -12,6 +12,7 @@ import { Login } from './components/login/login';
 import { ListaUsuarios } from './pages/lista-usuarios/lista-usuarios';
 import { UsuarioEdit } from './pages/usuario-edit/usuario-edit';
 import { RegisterPrestamo } from './pages/register-prestamo/register-prestamo';
+import { DetalleLibro } from './pages/detalle-libro/detalle-libro';
 
 export const routes: Routes = [
   /* Usuario */
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'registro-libros', component: RegisterLibro },
   { path: 'editar-libro/:id', component: EditLibro },
   { path: 'prestamos', component: Prestamos },
+  { path: 'detalle-libro/:id', component: DetalleLibro },
   /* prestamos */
   { path: 'register-prestamo/:id', component: RegisterPrestamo },
   // 2. El comodín SIEMPRE debe ser el último
