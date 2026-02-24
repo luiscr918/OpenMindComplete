@@ -1,0 +1,39 @@
+<nav class="navbar">
+
+  <div class="nav-left">
+    <a routerLink="/" class="brand">🧠 OpenMind</a>
+  </div>
+
+  <div class="nav-center">
+    @for (item of menuPrincipal; track item.path) {
+      <a [routerLink]="item.path" routerLinkActive="active">
+        {{ item.label }}
+      </a>
+    }
+
+    @if (estaLogueado()) {
+      <a routerLink="/prestamos" routerLinkActive="active">
+        Préstamos
+      </a>
+    }
+  </div>
+
+  <div class="nav-right">
+
+    @if (usuario() === undefined) {
+      <span>Cargando...</span>
+    }
+
+    @else if (usuario() === null) {
+      <a routerLink="/login">Login</a>
+      <a routerLink="/registro">Registro</a>
+    }
+
+    @else {
+      <span class="user-info">{{ usuario()?.email }}</span>
+      <button (click)="logout()">Salir</button>
+    }
+
+  </div>
+
+</nav>

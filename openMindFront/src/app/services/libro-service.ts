@@ -31,4 +31,8 @@ export class LibroService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  incrementarVistas(id: number): Observable<Libro> {
+    return this.http.post<Libro>(`${this.apiUrl}/${id}/incrementar-vistas`, {});
+  }
 }

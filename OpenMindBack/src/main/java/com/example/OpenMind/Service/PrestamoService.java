@@ -52,6 +52,18 @@ public class PrestamoService {
         prestamo.setFechaSalida(LocalDate.now());
         prestamo.setEstadoPrestamo(EstadoPrestamo.ACTIVO);
 
+        // VALIDAR STOCK
+    if (libro.getStock() == null || libro.getStock() <= 0) {
+        throw new RuntimeException("No hay stock disponible para este libro");
+    }
+
+    // DESCONTAR STOCK
+    libro.setStock(libro.getStock() - 1);
+
+    // Guardar libro actualizado
+    libroRepository.save(libro);
+
+    // Guardar préstamo
         return prestamoMapper.toDTO(prestamoRepository.save(prestamo));
     }
 
@@ -72,6 +84,9 @@ public class PrestamoService {
         prestamo.setEstadoPrestamo(EstadoPrestamo.DEVUELTO);
         prestamo.setFechaDevolucion(LocalDate.now());
 
+        // Aumentar stock del libro
+        Libro libro = prestamo.getLibro();
+        libro.setStock(libro.getStock() + 1);
         // Al estar en una @Transactional, Hibernate sincroniza el cambio automáticamente al terminar
         return prestamoMapper.toDTO(prestamoRepository.save(prestamo));
     }
