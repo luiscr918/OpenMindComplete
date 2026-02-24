@@ -3,10 +3,13 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Libro } from '../../../models/libro.model';
 import { LibroService } from '../../services/libro-service';
+import { Navbar } from "../../components/navbar/navbar";
+import { Footer } from "../../components/footer/footer";
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-catalogo',
   standalone: true, // Asegúrate de que sea standalone si no usas módulos
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Navbar, Footer, RouterLink],
   templateUrl: './catalogo.html',
   styleUrl: './catalogo.css',
 })

@@ -33,6 +33,11 @@ public class LibroController {
         return libroService.obtenerLibroPorId(id);
     }
 
+    @PostMapping("/{id}/incrementar-vistas")
+    public LibroDTO incrementarVistas(@PathVariable Long id) {
+        return libroService.incrementarVistas(id);
+    }
+
     @PutMapping("/{id}")
     public LibroDTO actualizarLibro(@PathVariable Long id,
                                  @Valid @RequestBody LibroDTO libro) {

@@ -64,4 +64,12 @@ public class LibroService {
         }
         libroRepository.deleteById(id);
     }
+
+    @Transactional
+    public LibroDTO incrementarVistas(Long id) {
+        Libro libro = libroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+        libro.setVistasTotales(libro.getVistasTotales() + 1);
+        return libroMapper.toDTO(libroRepository.save(libro));
+    }
 }

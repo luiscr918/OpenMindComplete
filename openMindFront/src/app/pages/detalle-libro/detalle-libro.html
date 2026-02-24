@@ -1,0 +1,133 @@
+<app-navbar></app-navbar>
+<div class="detalle-container">
+
+  @if (libro(); as libro) {
+
+    <div class="detalle-wrapper">
+      <div class="detalle-card">
+
+        <!-- Imagen con efecto -->
+        <div class="imagen-section">
+          <div class="imagen-wrapper">
+            <img [src]="libro.portada" alt="Portada libro" class="portada-img" />
+            <div class="shine-effect"></div>
+          </div>
+          <div class="badge-container">
+            <span class="category-badge">📚 Literatura</span>
+            <span class="rating-badge">⭐ 4.5</span>
+          </div>
+        </div>
+
+        <!-- Información -->
+        <div class="info-section">
+
+          <!-- Encabezado -->
+          <div class="header-info">
+            <h1 class="titulo">{{ libro.titulo }}</h1>
+            <p class="autor">
+              <span class="autor-label">Autor:</span>
+              <span class="autor-nombre">{{ libro.autor }}</span>
+            </p>
+          </div>
+
+          <!-- Stats -->
+          <div class="stats-container">
+            <div class="stat-item">
+              <span class="stat-icon">📄</span>
+              <div>
+                <span class="stat-label">Páginas</span>
+                <span class="stat-value">{{ libro.paginas }}</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">👁️</span>
+              <div>
+                <span class="stat-label">Vistas</span>
+                <span class="stat-value">{{ libro.vistasTotales || 0 }}</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <span class="stat-icon">📚</span>
+              <div>
+                <span class="stat-label">Disponibles</span>
+                <span class="stat-value">{{ libro.stock }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <div class="descripcion-section">
+            <h3 class="descripcion-title">Descripción</h3>
+            <p class="descripcion">
+              {{ libro.descripcion }}
+            </p>
+          </div>
+
+          <!-- STOCK BADGE -->
+          <div 
+            class="stock-badge"
+            [class.sin-stock]="libro.stock === 0"
+            [class.bajo-stock]="libro.stock > 0 && libro.stock <= 5">
+
+            @if (libro.stock === 0) {
+              <span class="stock-icon">❌</span>
+              <span>Sin stock disponible</span>
+            } @else if (libro.stock <= 5) {
+              <span class="stock-icon">⚠️</span>
+              <span>Solo {{ libro.stock }} disponibles</span>
+            } @else {
+              <span class="stock-icon">✅</span>
+              <span>{{ libro.stock }} disponibles</span>
+            }
+
+          </div>
+
+          <!-- BOTÓN -->
+          <button
+            class="btn-prestamo"
+            (click)="solicitarPrestamo()"
+            [disabled]="libro.stock === 0 || cargando()"
+            [class.loading-state]="cargando()">
+
+            @if (cargando()) {
+              <span class="spinner"></span>
+              <span>Procesando...</span>
+            } @else if (libro.stock === 0) {
+              <span>📭 No disponible</span>
+            } @else {
+              <span>📖 Solicitar préstamo</span>
+            }
+
+          </button>
+
+          <!-- MENSAJE -->
+          @if (mensaje()) {
+            <div 
+              class="mensaje"
+              [class.error]="mensaje()?.includes('Error') || mensaje()?.includes('⚠')">
+              <span class="mensaje-icon">
+                @if (mensaje()?.includes('Error') || mensaje()?.includes('⚠')) {
+                  ⚠️
+                } @else {
+                  ✅
+                }
+              </span>
+              <span>{{ mensaje() }}</span>
+            </div>
+          }
+
+        </div>
+      </div>
+    </div>
+
+  } @else {
+
+    <div class="loading-container">
+      <div class="spinner-loader"></div>
+      <p>Cargando detalles del libro...</p>
+    </div>
+
+  }
+
+</div>
+<app-footer></app-footer>

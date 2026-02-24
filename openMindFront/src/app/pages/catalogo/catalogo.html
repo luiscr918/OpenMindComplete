@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="catalogo-container">
 
   <h1>Catálogo de Libros</h1>
@@ -19,7 +20,9 @@
         <p>{{ libro.paginas }} páginas</p>
       </div>
       <div class="acciones">
-        <button class="btn-detalles">Ver Detalles</button>
+        <button class="btn-detalles" [routerLink]="['/detalle-libro', libro.id]">
+          Ver Detalles
+        </button>
       </div>
     </div>
     } @empty {
@@ -34,3 +37,4 @@
   </div>
   }
 </div>
+<app-footer></app-footer>
