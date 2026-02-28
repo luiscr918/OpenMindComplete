@@ -42,4 +42,9 @@ public class PrestamoController {
     public void eliminarPrestamo(@PathVariable Long id) {
         prestamoService.eliminarPrestamo(id);
     }
+    //prestamos por usuario:
+    @GetMapping("/usuario/{id}")
+    public List<PrestamoDTO> prestamosUsuario(@PathVariable Long id) {
+        return prestamoService.prestamosUsuario(id);
+    }
 }

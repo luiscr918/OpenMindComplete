@@ -1,37 +1,60 @@
-<nav class="navbar">
+<nav class="flex items-center justify-between px-10 h-20 bg-slate-900 text-white">
 
-  <div class="nav-left">
-    <a routerLink="/" class="brand">🧠 OpenMind</a>
+  <!-- Logo -->
+  <div>
+    <a routerLink="/" class="text-2xl font-bold text-sky-400 no-underline">🧠 OpenMind</a>
   </div>
 
-  <div class="nav-center">
+  <!-- Menu central -->
+  <div class="flex items-center gap-6">
+    <!-- Inicio con exact para que no siempre esté activo -->
+    <a routerLink="/" routerLinkActive="border-b-2 border-sky-400 text-sky-400"
+      [routerLinkActiveOptions]="{exact: true}"
+      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
+      Inicio
+    </a>
+
     @for (item of menuPrincipal; track item.path) {
-      <a [routerLink]="item.path" routerLinkActive="active">
-        {{ item.label }}
-      </a>
+    <a [routerLink]="item.path" routerLinkActive="border-b-2 border-sky-400 text-sky-400"
+      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
+      {{ item.label }}
+    </a>
     }
 
     @if (estaLogueado()) {
-      <a routerLink="/prestamos" routerLinkActive="active">
-        Préstamos
-      </a>
+    <a (click)="irAMisPrestamos()"
+      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1 cursor-pointer">
+      Mis Préstamos
+    </a>
     }
   </div>
 
-  <div class="nav-right">
+  <!-- Nav derecha -->
+  <div class="flex items-center gap-4">
 
-    @if (usuario() === undefined) {
-      <span>Cargando...</span>
+    @if (usuarioFirebase() === undefined) {
+    <span class="text-slate-400 text-sm">Cargando...</span>
     }
 
-    @else if (usuario() === null) {
-      <a routerLink="/login">Login</a>
-      <a routerLink="/registro">Registro</a>
+    @else if (usuarioFirebase() === null) {
+    <a routerLink="/login"
+      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200">
+      Login
+    </a>
+    <a routerLink="/registro"
+      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200">
+      Registro
+    </a>
     }
 
     @else {
-      <span class="user-info">{{ usuario()?.email }}</span>
-      <button (click)="logout()">Salir</button>
+    <span class="text-slate-300 text-sm">
+      {{ usuarioDB()?.nombreCompleto ?? usuarioFirebase()?.email }}
+    </span>
+    <button (click)="logout()"
+      class="bg-red-500 hover:opacity-85 text-white px-3 py-1.5 rounded-md text-sm transition-opacity duration-200 cursor-pointer border-none">
+      Salir
+    </button>
     }
 
   </div>

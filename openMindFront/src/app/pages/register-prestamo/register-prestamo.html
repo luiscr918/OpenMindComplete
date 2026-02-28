@@ -1,10 +1,14 @@
 <!-- Loading -->
-<div *ngIf="cargando" class="flex items-center justify-center h-[60vh]">
+@if(cargando){
+<div class="flex items-center justify-center h-[60vh]">
     <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-500 border-t-transparent"></div>
 </div>
+}
+
 
 <!-- Card -->
-<div *ngIf="!cargando" class="max-w-md mx-auto mt-10">
+@if (!cargando) {
+<div class="max-w-md mx-auto mt-10">
     <div class="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
 
         <h2 class="text-xl font-semibold text-gray-800 mb-4">
@@ -29,7 +33,7 @@
         </div>
 
         <div class="flex gap-3 mt-6">
-            <button (click)="guardarPrestamo()"
+            <button (click)="guardarPrestamo(nuevoPrestamo.usuarioId)"
                 class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition duration-200">
                 Guardar
             </button>
@@ -42,3 +46,4 @@
 
     </div>
 </div>
+}

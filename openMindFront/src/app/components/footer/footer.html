@@ -1,37 +1,45 @@
-<footer class="footer">
+<footer class="bg-[#1e1e2f] text-white pt-10 pb-4 mt-16">
 
-  <div class="footer-container">
+  <div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-between gap-10">
 
     <!-- Marca -->
-    <div class="footer-section">
-      <h3 class="logo">OpenMind</h3>
-      <p>
+    <div class="flex-1 min-w-55">
+      <h3 class="text-xl font-bold text-sky-400 mb-3">🧠 OpenMind</h3>
+      <p class="text-slate-400 text-sm leading-relaxed">
         Biblioteca virtual diseñada para expandir tu conocimiento
         y conectar mentes curiosas.
       </p>
     </div>
 
     <!-- Navegación -->
-    <div class="footer-section">
-      <h4>Explorar</h4>
-      <ul>
-        <li><a routerLink="/">Inicio</a></li>
-        <li><a routerLink="/catalogo">Catálogo</a></li>
-        <li><a routerLink="/nosotros">Nosotros</a></li>
-        <li><a routerLink="/contactos">Contactos</a></li>
+    <div class="flex-1 min-w-45">
+      <h4 class="font-semibold text-white mb-3">Explorar</h4>
+      <ul class="space-y-2">
+        <li><a routerLink="/"
+            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Inicio</a>
+        </li>
+        <li><a routerLink="/catalogo"
+            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Catálogo</a>
+        </li>
+        <li><a routerLink="/nosotros"
+            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Nosotros</a>
+        </li>
+        <li><a routerLink="/contactos"
+            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Contactos</a>
+        </li>
       </ul>
     </div>
 
     <!-- Contacto -->
-    <div class="footer-section">
-      <h4>Contacto</h4>
-      <p>Email: soporte@openmind.com</p>
-      <p>Quito - Ecuador</p>
+    <div class="flex-1 min-w-50">
+      <h4 class="font-semibold text-white mb-3">Contacto</h4>
+      <p class="text-slate-400 text-sm mb-1">Email: soporte@openmind.com</p>
+      <p class="text-slate-400 text-sm">Quito - Ecuador</p>
     </div>
 
   </div>
 
-  <div class="footer-bottom">
+  <div class="border-t border-slate-700 mt-8 pt-4 text-center text-slate-500 text-sm">
     © 2026 OpenMind - Todos los derechos reservados
   </div>
 

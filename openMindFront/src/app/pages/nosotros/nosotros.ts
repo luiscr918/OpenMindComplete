@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { Navbar } from "../../components/navbar/navbar";
+import { Footer } from "../../components/footer/footer";
 
 @Component({
   selector: 'app-nosotros',
-  imports: [],
+  imports: [Navbar, Footer],
   templateUrl: './nosotros.html',
   styleUrl: './nosotros.css',
 })

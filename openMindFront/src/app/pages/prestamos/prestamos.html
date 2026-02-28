@@ -1,43 +1,92 @@
-<div class="prestamos-container">
+<app-navbar></app-navbar>
+<!-- Loading -->
+@if (cargando) {
+<div class="flex items-center justify-center h-[60vh]">
+  <div class="animate-spin rounded-full h-12 w-12 border-4 border-indigo-500 border-t-transparent"></div>
+</div>
+}
 
-  <h1>Préstamos</h1>
-  <p>Aquí puedes ver todos los libros que tienes actualmente prestados y su estado.</p>
+@if (!cargando) {
+<div class="max-w-4xl mx-auto mt-10 px-4">
 
-  <div *ngIf="prestamos.length > 0; else sinPrestamos" class="tabla-prestamos">
 
-    <table>
-      <thead>
+
+  @if (prestamos().length === 0) {
+  <div class="text-center py-16 text-gray-500">
+    <p class="text-lg">No tienes préstamos registrados.</p>
+  </div>
+  } @else {
+  <div class="overflow-x-auto rounded-xl shadow border border-gray-100">
+    <table class="w-full text-sm text-left text-gray-600">
+      <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
         <tr>
-          <th>Portada</th>
-          <th>Título</th>
-          <th>Autor</th>
-          <th>Fecha de Préstamo</th>
-          <th>Fecha de Devolución</th>
-          <th>Estado</th>
+          <th class="px-4 py-3">Portada</th>
+          <th class="px-4 py-3">Título</th>
+          <th class="px-4 py-3">Fecha salida</th>
+          <th class="px-4 py-3">Fecha devolución</th>
+          <th class="px-4 py-3">Estado</th>
+          <th class="px-4 py-3">Acciones</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let libro of prestamos">
-          <td><img [src]="libro.imagen || 'https://via.placeholder.com/60x90'" alt="Portada"></td>
-          <td>{{ libro.titulo }}</td>
-          <td>{{ libro.autor }}</td>
-          <td>{{ libro.fechaPrestamo | date:'shortDate' }}</td>
-          <td>{{ libro.fechaDevolucion | date:'shortDate' }}</td>
-          <td>
-            <span [ngClass]="{
-              'activo': libro.estado === 'Activo',
-              'vencido': libro.estado === 'Vencido',
-              'devuelto': libro.estado === 'Devuelto'
-            }">{{ libro.estado }}</span>
+      <tbody class="divide-y divide-gray-100">
+        @for (prestamo of prestamosEnPagina(); track prestamo.id) {
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-4 py-3">
+            <img [src]="prestamo.portada || 'https://via.placeholder.com/50x70'" alt="Portada"
+              class="w-12 h-16 object-cover rounded shadow-sm" />
+          </td>
+          <td class="px-4 py-3 font-medium text-gray-800">{{ prestamo.tituloLibro }}</td>
+          <td class="px-4 py-3">{{ prestamo.fechaSalida }}</td>
+          <td class="px-4 py-3">{{ prestamo.fechaDevolucion ?? '—' }}</td>
+          <td class="px-4 py-3">
+            <span [class]="getEstadoClass(prestamo.estadoPrestamo)">
+              {{ prestamo.estadoPrestamo }}
+            </span>
+          </td>
+          <td class="px-4 py-3">
+            @if (prestamo.estadoPrestamo === 'ACTIVO' || prestamo.estadoPrestamo === 'ATRASADO') {
+            <button (click)="devolver(prestamo.id!)"
+              class="text-xs bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-full transition">
+              Devolver
+            </button>
+            }
           </td>
         </tr>
+        }
       </tbody>
     </table>
-
   </div>
 
-  <ng-template #sinPrestamos>
-    <p class="sin-prestamos">No tienes libros prestados actualmente.</p>
-  </ng-template>
+  <!-- Paginación -->
+  @if (totalPaginas() > 1) {
+  <div class="flex items-center justify-center gap-2 mt-4">
+    <button (click)="cambiarPagina(paginaActual() - 1)" [disabled]="paginaActual() === 1"
+      class="px-3 py-1 rounded-lg border text-sm disabled:opacity-40 hover:bg-gray-100 transition">
+      ‹
+    </button>
+
+    @for (p of getPaginas(); track p) {
+    <button (click)="cambiarPagina(p)" [class]="paginaActual() === p
+        ? 'px-3 py-1 rounded-lg text-sm bg-indigo-600 text-white'
+        : 'px-3 py-1 rounded-lg text-sm border hover:bg-gray-100 transition'">
+      {{ p }}
+    </button>
+    }
+
+    <button (click)="cambiarPagina(paginaActual() + 1)" [disabled]="paginaActual() === totalPaginas()"
+      class="px-3 py-1 rounded-lg border text-sm disabled:opacity-40 hover:bg-gray-100 transition">
+      ›
+    </button>
+  </div>
+  }
+  }
+
+  <div class="mt-6">
+    <button (click)="volver()" class="text-sm text-gray-500 hover:text-gray-700 underline transition">
+      ← Volver
+    </button>
+  </div>
 
 </div>
+}
+<app-footer></app-footer>

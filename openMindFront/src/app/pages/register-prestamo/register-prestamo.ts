@@ -27,21 +27,21 @@ export class RegisterPrestamo implements OnInit {
   private cdr = inject(ChangeDetectorRef); // ⭐ clave
 
   cargando = true;
-libroId = signal<number | null>(null);
+  libroId = signal<number | null>(null);
 
-// ⭐ helper fecha local
-getFechaLocal(): string {
-  return new Date().toLocaleDateString('en-CA');
-}
+  // ⭐ helper fecha local
+  getFechaLocal(): string {
+    return new Date().toLocaleDateString('en-CA');
+  }
 
-nuevoPrestamo: Prestamo = {
-  fechaSalida: this.getFechaLocal(),
-  estadoPrestamo: 'ACTIVO',
-  usuarioId: 0,
-  nombreUsuario: '',
-  libroId: 0,
-  tituloLibro: '',
-};
+  nuevoPrestamo: Prestamo = {
+    fechaSalida: this.getFechaLocal(),
+    estadoPrestamo: 'ACTIVO',
+    usuarioId: 0,
+    nombreUsuario: '',
+    libroId: 0,
+    tituloLibro: '',
+  };
 
   constructor() {
     effect(() => {
@@ -62,42 +62,45 @@ nuevoPrestamo: Prestamo = {
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const id = Number(params.get('id'));
       if (id) this.libroId.set(id);
     });
   }
 
   cargarDatos(libroId: number, email: string) {
-    this.libroService.getById(libroId).pipe(
-      switchMap(libro => {
-        this.nuevoPrestamo.libroId = libro.id!;
-        this.nuevoPrestamo.tituloLibro = libro.titulo;
-        return this.usuarioService.getByEmail(email);
-      })
-    ).subscribe({
-      next: usuario => {
-        this.nuevoPrestamo.usuarioId = usuario.id!;
-        this.nuevoPrestamo.nombreUsuario = usuario.nombreCompleto;
-        this.cargando = false;
+    this.libroService
+      .getById(libroId)
+      .pipe(
+        switchMap((libro) => {
+          this.nuevoPrestamo.libroId = libro.id!;
+          this.nuevoPrestamo.tituloLibro = libro.titulo;
+          return this.usuarioService.getByEmail(email);
+        }),
+      )
+      .subscribe({
+        next: (usuario) => {
+          this.nuevoPrestamo.usuarioId = usuario.id!;
+          this.nuevoPrestamo.nombreUsuario = usuario.nombreCompleto;
+          this.cargando = false;
 
-        this.cdr.detectChanges(); // ⭐ SOLUCIÓN CTRL+S
-      },
-      error: () => this.router.navigate(['/catalogo'])
-    });
+          this.cdr.detectChanges(); // ⭐ SOLUCIÓN CTRL+S
+        },
+        error: () => this.router.navigate(['/catalogo']),
+      });
   }
 
   cancelar() {
     window.history.back();
   }
 
-  guardarPrestamo() {
-  this.prestamoService.create(this.nuevoPrestamo).subscribe({
-    next: () => {
-      // ⭐ sin alert
-      this.router.navigate(['/prestamos']); // ir a lista y ver el nuevo
-    },
-    error: err => console.error('Error al crear préstamo', err),
-  });
-}
+  guardarPrestamo(usuarioId: number) {
+    this.prestamoService.create(this.nuevoPrestamo).subscribe({
+      next: () => {
+        // ⭐ sin alert
+        this.router.navigate([`/mis-prestamos/${usuarioId}`]); // ir a lista y ver el nuevo
+      },
+      error: (err) => console.error('Error al crear préstamo', err),
+    });
+  }
 }

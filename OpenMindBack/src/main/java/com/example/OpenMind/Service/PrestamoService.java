@@ -98,4 +98,11 @@ public class PrestamoService {
         }
         prestamoRepository.deleteById(id);
     }
+    //Obtener prestamos por usuario
+    @Transactional(readOnly = true)
+    public List<PrestamoDTO> prestamosUsuario(Long usuarioId){
+        return prestamoRepository.findByUsuarioId(usuarioId).stream()
+                .map(prestamoMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }

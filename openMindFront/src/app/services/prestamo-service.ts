@@ -27,4 +27,7 @@ export class PrestamoService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  getByUsuario(id: number): Observable<Prestamo[]> {
+    return this.http.get<Prestamo[]>(`${this.apiUrl}/usuario/${id}`);
+  }
 }
