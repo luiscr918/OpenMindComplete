@@ -14,9 +14,9 @@ import { UsuarioEdit } from './pages/usuario-edit/usuario-edit';
 import { RegisterPrestamo } from './pages/register-prestamo/register-prestamo';
 import { DetalleLibro } from './pages/detalle-libro/detalle-libro';
 import { Dashboard } from './admin/dashboard/dashboard';
-import { authGuard } from './guards/auth-guard';
-import { adminGuard } from './guards/admin-guard';
 
+import { adminGuard } from './guards/admin-guard';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   // Públicas
