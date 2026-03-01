@@ -33,6 +33,13 @@
       Dashboard
     </a>
     }
+    @if (esLector()) {
+  <a routerLink="/perfil"
+     routerLinkActive="border-b-2 border-sky-400 text-sky-400"
+     class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
+     Perfil
+  </a>
+}
   </div>
 
   <!-- Nav derecha -->
