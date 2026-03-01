@@ -1,0 +1,256 @@
+<div class="flex h-screen bg-gray-100 overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-slate-900 text-white flex flex-col justify-between py-6 px-4 shrink-0">
+
+    <div>
+      <!-- Logo -->
+      <div class="mb-8 px-2">
+        <span class="text-xl font-bold text-sky-400">🧠 OpenMind</span>
+        <p class="text-xs text-slate-400 mt-1">Panel de administración</p>
+      </div>
+
+      <!-- Menu -->
+      <nav class="flex flex-col gap-1">
+        <button (click)="seccionActiva.set('estadisticas')"
+          [class]="seccionActiva() === 'estadisticas'
+            ? 'flex items-center gap-3 px-4 py-2.5 rounded-lg bg-sky-600 text-white text-sm font-medium'
+            : 'flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-slate-700 text-slate-300 text-sm transition-colors'">
+          📊 Estadísticas
+        </button>
+
+        <button (click)="seccionActiva.set('usuarios')"
+          [class]="seccionActiva() === 'usuarios'
+            ? 'flex items-center gap-3 px-4 py-2.5 rounded-lg bg-sky-600 text-white text-sm font-medium'
+            : 'flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-slate-700 text-slate-300 text-sm transition-colors'">
+          👥 Usuarios
+        </button>
+
+        <button (click)="seccionActiva.set('libros')"
+          [class]="seccionActiva() === 'libros'
+            ? 'flex items-center gap-3 px-4 py-2.5 rounded-lg bg-sky-600 text-white text-sm font-medium'
+            : 'flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-slate-700 text-slate-300 text-sm transition-colors'">
+          📚 Libros
+        </button>
+
+        <button (click)="seccionActiva.set('prestamos')"
+          [class]="seccionActiva() === 'prestamos'
+            ? 'flex items-center gap-3 px-4 py-2.5 rounded-lg bg-sky-600 text-white text-sm font-medium'
+            : 'flex items-center gap-3 px-4 py-2.5 rounded-lg hover:bg-slate-700 text-slate-300 text-sm transition-colors'">
+          🔖 Préstamos
+        </button>
+      </nav>
+    </div>
+
+    <!-- Usuario + Logout -->
+    <div class="border-t border-slate-700 pt-4">
+      <p class="text-xs text-slate-400 px-2 mb-3 truncate">{{ usuarioDB()?.nombreCompleto }}</p>
+      <button (click)="logout()"
+        class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm transition-colors">
+        🚪 Cerrar sesión
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="flex-1 overflow-y-auto p-8">
+
+    <!-- ESTADÍSTICAS -->
+    @if (seccionActiva() === 'estadisticas') {
+    <div>
+      <h1 class="text-2xl font-semibold text-gray-800 mb-6">Estadísticas generales</h1>
+
+      <div class="grid grid-cols-2 gap-4 mb-6 lg:grid-cols-3">
+        <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
+          <p class="text-sm text-gray-500">Total usuarios</p>
+          <p class="text-3xl font-bold text-slate-800 mt-1">{{ totalUsuarios() }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
+          <p class="text-sm text-gray-500">Total libros</p>
+          <p class="text-3xl font-bold text-slate-800 mt-1">{{ totalLibros() }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
+          <p class="text-sm text-gray-500">Total préstamos</p>
+          <p class="text-3xl font-bold text-slate-800 mt-1">{{ totalPrestamos() }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 border border-blue-100">
+          <p class="text-sm text-blue-500">Préstamos activos</p>
+          <p class="text-3xl font-bold text-blue-700 mt-1">{{ prestamosActivos() }}</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 border border-green-100">
+          <p class="text-sm text-green-500">Préstamos devueltos</p>
+          <p class="text-3xl font-bold text-green-600 mt-1">{{ prestamosDevueltos() }}</p>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- USUARIOS -->
+    @if (seccionActiva() === 'usuarios') {
+    <div>
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Usuarios</h1>
+        <a routerLink="/registro"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm transition no-underline">
+          + Nuevo usuario
+        </a>
+      </div>
+
+      <div class="bg-white rounded-xl shadow border border-gray-100 overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-600">
+          <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
+            <tr>
+              <th class="px-4 py-3">Nombre</th>
+              <th class="px-4 py-3">Email</th>
+              <th class="px-4 py-3">Rol</th>
+              <th class="px-4 py-3">Ocupación</th>
+              <th class="px-4 py-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            @for (usuario of usuarios(); track usuario.id) {
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-4 py-3 font-medium text-gray-800">{{ usuario.nombreCompleto }}</td>
+              <td class="px-4 py-3">{{ usuario.email }}</td>
+              <td class="px-4 py-3">
+                <span class="text-xs font-semibold px-2 py-1 rounded-full bg-slate-100 text-slate-700">
+                  {{ usuario.rol }}
+                </span>
+              </td>
+              <td class="px-4 py-3">{{ usuario.ocupacion }}</td>
+              <td class="px-4 py-3 flex gap-2">
+                <a [routerLink]="['/editar-usuario', usuario.id]"
+                  class="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1 rounded-full transition no-underline">
+                  Editar
+                </a>
+                <button (click)="eliminarUsuario(usuario.id)"
+                  class="text-xs bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-full transition">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    }
+
+    <!-- LIBROS -->
+    @if (seccionActiva() === 'libros') {
+    <div>
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-semibold text-gray-800">Libros</h1>
+        <a routerLink="/registro-libros"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm transition no-underline">
+          + Nuevo libro
+        </a>
+      </div>
+
+      <div class="bg-white rounded-xl shadow border border-gray-100 overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-600">
+          <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
+            <tr>
+              <th class="px-4 py-3">Portada</th>
+              <th class="px-4 py-3">Título</th>
+              <th class="px-4 py-3">Autor</th>
+              <th class="px-4 py-3">Páginas</th>
+              <th class="px-4 py-3">Stock</th>
+              <th class="px-4 py-3">Vistas</th>
+              <th class="px-4 py-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            @for (libro of libros(); track libro.id) {
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-4 py-3">
+                <img [src]="libro.portada || 'https://via.placeholder.com/40x56'" alt="portada"
+                  class="w-10 h-14 object-cover rounded shadow-sm" />
+              </td>
+              <td class="px-4 py-3 font-medium text-gray-800">{{ libro.titulo }}</td>
+              <td class="px-4 py-3">{{ libro.autor }}</td>
+              <td class="px-4 py-3">{{ libro.paginas }}</td>
+              <td class="px-4 py-3">{{ libro.stock }}</td>
+              <td class="px-4 py-3">{{ libro.vistasTotales }}</td>
+              <td class="px-4 py-3 flex gap-2">
+                <a [routerLink]="['/editar-libro', libro.id]"
+                  class="text-xs bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-3 py-1 rounded-full transition no-underline">
+                  Editar
+                </a>
+                <button (click)="eliminarLibro(libro.id)"
+                  class="text-xs bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-full transition">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    }
+
+    <!-- PRÉSTAMOS -->
+    <!-- PRÉSTAMOS -->
+@if (seccionActiva() === 'prestamos') {
+<div>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">Préstamos</h1>
+    <input [(ngModel)]="busquedaPrestamo"
+      (ngModelChange)="busquedaPrestamo.set($event)"
+      [value]="busquedaPrestamo()"
+      (input)="busquedaPrestamo.set($any($event.target).value)"
+      type="text"
+      placeholder="Buscar por usuario..."
+      class="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 w-64" />
+  </div>
+
+  <div class="bg-white rounded-xl shadow border border-gray-100 overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-600">
+      <thead class="bg-gray-50 text-gray-700 uppercase text-xs">
+        <tr>
+          <th class="px-4 py-3">Libro</th>
+          <th class="px-4 py-3">Usuario</th>
+          <th class="px-4 py-3">Fecha salida</th>
+          <th class="px-4 py-3">Fecha devolución</th>
+          <th class="px-4 py-3">Estado</th>
+          <th class="px-4 py-3">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        @for (prestamo of prestamosFiltrados(); track prestamo.id) {
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-4 py-3 font-medium text-gray-800">{{ prestamo.tituloLibro }}</td>
+          <td class="px-4 py-3">{{ prestamo.nombreUsuario }}</td>
+          <td class="px-4 py-3">{{ prestamo.fechaSalida }}</td>
+          <td class="px-4 py-3">{{ prestamo.fechaDevolucion ?? '—' }}</td>
+          <td class="px-4 py-3">
+            <span [class]="getEstadoClass(prestamo.estadoPrestamo)">
+              {{ prestamo.estadoPrestamo }}
+            </span>
+          </td>
+          <td class="px-4 py-3">
+            @if (prestamo.estadoPrestamo === 'ACTIVO' || prestamo.estadoPrestamo === 'ATRASADO') {
+            <button (click)="devolverPrestamo(prestamo.id)"
+              class="text-xs bg-green-100 hover:bg-green-200 text-green-700 px-3 py-1 rounded-full transition">
+              Devolver
+            </button>
+            }
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+
+    @if (prestamosFiltrados().length === 0) {
+    <div class="text-center py-10 text-gray-400 text-sm">
+      No se encontraron préstamos para "{{ busquedaPrestamo() }}"
+    </div>
+    }
+  </div>
+</div>
+}
+
+  </main>
+</div>

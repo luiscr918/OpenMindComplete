@@ -3,10 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { LibroService } from '../../services/libro-service';
+import { Navbar } from "../../components/navbar/navbar";
+import { Footer } from "../../components/footer/footer";
 
 @Component({
   selector: 'app-register-libro',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Navbar, Footer],
   templateUrl: './register-libro.html',
   styleUrl: './register-libro.css',
 })
