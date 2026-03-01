@@ -4,11 +4,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Rol } from '../../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario-service';
+import { Navbar } from "../../components/navbar/navbar";
+import { Footer } from "../../components/footer/footer";
 
 @Component({
   selector: 'app-usuario-edit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, Navbar, Footer],
   templateUrl: './usuario-edit.html',
   styleUrl: './usuario-edit.css',
 })

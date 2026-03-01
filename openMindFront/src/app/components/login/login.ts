@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
-import { Navbar } from "../navbar/navbar";
+import { UsuarioService } from '../../services/usuario-service';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,8 @@ import { Navbar } from "../navbar/navbar";
   styleUrl: './login.css',
 })
 export class Login {
+  private usuarioService = inject(UsuarioService);
+
   loginForm: FormGroup;
   mensaje = signal('');
   cargando = signal(false);
@@ -35,16 +38,25 @@ export class Login {
       this.authService.login(email, password).subscribe({
         next: (userCredential) => {
           this.mensaje.set('¡Bienvenido de nuevo!');
-          // Aquí podrías guardar el email en el localStorage si lo necesitas
-          console.log('Usuario logueado:', userCredential.user.email);
 
-          setTimeout(() => {
-            this.router.navigate(['/catalogo']);
-          }, 1500);
+          // Buscar rol en el backend y redirigir según rol
+          this.usuarioService.getByEmail(email).subscribe({
+            next: (u) => {
+              setTimeout(() => {
+                if (u.rol === 'ADMIN') {
+                  this.router.navigate(['/dashboard']);
+                } else {
+                  this.router.navigate(['/catalogo']);
+                }
+              }, 1500);
+            },
+            error: () => {
+              setTimeout(() => this.router.navigate(['/']), 1500);
+            },
+          });
         },
         error: (err) => {
           this.cargando.set(false);
-          // Firebase suele devolver códigos de error específicos
           if (err.code === 'auth/invalid-credential') {
             this.mensaje.set('Correo o contraseña incorrectos.');
           } else {

@@ -7,7 +7,6 @@
 
   <!-- Menu central -->
   <div class="flex items-center gap-6">
-    <!-- Inicio con exact para que no siempre esté activo -->
     <a routerLink="/" routerLinkActive="border-b-2 border-sky-400 text-sky-400"
       [routerLinkActiveOptions]="{exact: true}"
       class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
@@ -25,6 +24,13 @@
     <a (click)="irAMisPrestamos()"
       class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1 cursor-pointer">
       Mis Préstamos
+    </a>
+    }
+
+    @if (esAdmin()) {
+    <a routerLink="/dashboard" routerLinkActive="border-b-2 border-sky-400 text-sky-400"
+      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
+      Dashboard
     </a>
     }
   </div>

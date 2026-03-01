@@ -19,6 +19,7 @@ export class Navbar {
   usuarioFirebase = this.authService.usuarioFirebase;
   estaLogueado = computed(() => !!this.usuarioFirebase());
   usuarioDB = signal<Usuario | null>(null);
+  esAdmin = computed(() => this.usuarioDB()?.rol === 'ADMIN');
 
   menuPrincipal = [
     { label: 'Catálogo', path: '/catalogo' },
@@ -30,7 +31,7 @@ export class Navbar {
     effect(() => {
       const user = this.usuarioFirebase();
 
-      if (user === undefined) return; // cargando
+      if (user === undefined) return;
 
       if (!user) {
         this.usuarioDB.set(null);

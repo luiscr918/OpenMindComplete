@@ -14,28 +14,32 @@ import { UsuarioEdit } from './pages/usuario-edit/usuario-edit';
 import { RegisterPrestamo } from './pages/register-prestamo/register-prestamo';
 import { DetalleLibro } from './pages/detalle-libro/detalle-libro';
 import { Dashboard } from './admin/dashboard/dashboard';
+import { authGuard } from './guards/auth-guard';
+import { adminGuard } from './guards/admin-guard';
+
 
 export const routes: Routes = [
-  /* Usuario */
+  // Públicas
   { path: '', component: Home },
   { path: 'registro', component: Register },
   { path: 'login', component: Login },
-  { path: 'perfil', component: Perfil },
   { path: 'catalogo', component: Catalogo },
   { path: 'nosotros', component: Nosotros },
   { path: 'contactos', component: Contactos },
-  { path: 'lista-usuarios', component: ListaUsuarios },
-  { path: 'editar-usuario/:id', component: UsuarioEdit },
-  /* Libros */
-  { path: 'registro-libros', component: RegisterLibro },
-  { path: 'editar-libro/:id', component: EditLibro },
-  { path: 'mis-prestamos/:usuarioId', component: Prestamos },
   { path: 'detalle-libro/:id', component: DetalleLibro },
-  /* prestamos */
-  { path: 'register-prestamo/:id', component: RegisterPrestamo },
 
-  /*dashboard*/
-   { path: 'dashboard', component: Dashboard },
-  // 2. El comodín SIEMPRE debe ser el último
+  // Requieren login
+  { path: 'perfil', component: Perfil, canActivate: [authGuard] },
+  { path: 'mis-prestamos/:usuarioId', component: Prestamos, canActivate: [authGuard] },
+  { path: 'register-prestamo/:id', component: RegisterPrestamo, canActivate: [authGuard] },
+
+  // Solo admin
+  { path: 'dashboard', component: Dashboard, canActivate: [adminGuard] },
+  { path: 'registro-libros', component: RegisterLibro, canActivate: [adminGuard] },
+  { path: 'editar-libro/:id', component: EditLibro, canActivate: [adminGuard] },
+  { path: 'lista-usuarios', component: ListaUsuarios, canActivate: [adminGuard] },
+  { path: 'editar-usuario/:id', component: UsuarioEdit, canActivate: [adminGuard] },
+
+  // Comodín siempre al final
   { path: '**', redirectTo: '' },
 ];
