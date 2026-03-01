@@ -20,6 +20,7 @@ export class Navbar {
   estaLogueado = computed(() => !!this.usuarioFirebase());
   usuarioDB = signal<Usuario | null>(null);
   esAdmin = computed(() => this.usuarioDB()?.rol === 'ADMIN');
+  esLector = computed(() => this.usuarioDB()?.rol === 'LECTOR');
 
   menuPrincipal = [
     { label: 'Catálogo', path: '/catalogo' },

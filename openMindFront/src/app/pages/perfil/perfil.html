@@ -1,63 +1,158 @@
-<div class="perfil-container">
+<app-navbar></app-navbar>
+<div class="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black flex items-center justify-center px-6 py-12">
 
-  <div class="perfil-card">
-    <h1>Mi Perfil</h1>
+  <div class="w-full max-w-3xl bg-gray-900/80 backdrop-blur-xl border border-gray-800 text-white rounded-3xl shadow-2xl p-12 relative transition-all duration-500">
 
-    <div class="perfil-info">
-      <h2>Información del Usuario</h2>
+    <!-- Toast -->
+    @if (mostrarToast) {
+      <div class="absolute top-5 right-5 bg-emerald-500 text-white px-4 py-2 rounded-xl shadow-lg animate-pulse">
+        Perfil actualizado correctamente ✔
+      </div>
+    }
 
-      <div class="info-item">
-        <span>Nombre:</span>
-        <p>{{ usuario?.nombre }}</p>
+    <!-- Avatar -->
+    @if (usuario) {
+      <div class="flex flex-col items-center mb-10">
+        <div class="w-24 h-24 rounded-full bg-sky-500 flex items-center justify-center text-3xl font-bold shadow-xl">
+          {{ inicial }}
+        </div>
+        <h2 class="mt-4 text-2xl font-semibold">
+          {{ usuario.nombreCompleto }}
+        </h2>
+        <p class="text-gray-400 text-sm">
+          {{ usuario.rol }}
+        </p>
+      </div>
+    }
+
+    <!-- Loader -->
+    @if (!usuario) {
+      <div class="text-center text-gray-400 animate-pulse">
+        Cargando perfil...
+      </div>
+    }
+
+    @if (usuario) {
+
+      <div class="grid gap-6">
+
+        <!-- Campo reusable -->
+        <!-- Nombre -->
+        <div class="bg-gray-800/60 p-5 rounded-2xl hover:bg-gray-800 transition-all">
+          <p class="text-gray-400 text-sm">Nombre Completo</p>
+
+          @if (campoEditando !== 'nombreCompleto') {
+            <div class="flex justify-between items-center mt-2">
+              <p class="text-lg font-medium">{{ usuario.nombreCompleto }}</p>
+              <button (click)="editar('nombreCompleto')" class="hover:scale-110 transition">
+                ✏️
+              </button>
+            </div>
+          } @else {
+            <div class="flex gap-2 mt-3">
+              <input type="text"
+                     [(ngModel)]="usuario.nombreCompleto"
+                     class="flex-1 px-4 py-2 rounded-xl bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none">
+              <button (click)="guardar()"
+                      class="bg-sky-500 hover:bg-sky-600 px-4 rounded-xl transition">
+                @if (guardando) { ... } @else { ✔ }
+              </button>
+              <button (click)="cancelar()"
+                      class="bg-gray-600 hover:bg-gray-500 px-4 rounded-xl transition">
+                ✖
+              </button>
+            </div>
+          }
+        </div>
+
+        <!-- Edad -->
+        <div class="bg-gray-800/60 p-5 rounded-2xl hover:bg-gray-800 transition-all">
+          <p class="text-gray-400 text-sm">Edad</p>
+
+          @if (campoEditando !== 'edad') {
+            <div class="flex justify-between items-center mt-2">
+              <p class="text-lg font-medium">{{ usuario.edad }}</p>
+              <button (click)="editar('edad')" class="hover:scale-110 transition">
+                ✏️
+              </button>
+            </div>
+          } @else {
+            <div class="flex gap-2 mt-3">
+              <input type="number"
+                     [(ngModel)]="usuario.edad"
+                     class="flex-1 px-4 py-2 rounded-xl bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none">
+              <button (click)="guardar()"
+                      class="bg-sky-500 hover:bg-sky-600 px-4 rounded-xl transition">
+                ✔
+              </button>
+              <button (click)="cancelar()"
+                      class="bg-gray-600 hover:bg-gray-500 px-4 rounded-xl transition">
+                ✖
+              </button>
+            </div>
+          }
+        </div>
+
+        <!-- Ocupación -->
+        <div class="bg-gray-800/60 p-5 rounded-2xl hover:bg-gray-800 transition-all">
+          <p class="text-gray-400 text-sm">Ocupación</p>
+
+          @if (campoEditando !== 'ocupacion') {
+            <div class="flex justify-between items-center mt-2">
+              <p class="text-lg font-medium">{{ usuario.ocupacion }}</p>
+              <button (click)="editar('ocupacion')" class="hover:scale-110 transition">
+                ✏️
+              </button>
+            </div>
+          } @else {
+            <div class="flex gap-2 mt-3">
+              <input type="text"
+                     [(ngModel)]="usuario.ocupacion"
+                     class="flex-1 px-4 py-2 rounded-xl bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none">
+              <button (click)="guardar()" class="bg-sky-500 hover:bg-sky-600 px-4 rounded-xl">✔</button>
+              <button (click)="cancelar()" class="bg-gray-600 hover:bg-gray-500 px-4 rounded-xl">✖</button>
+            </div>
+          }
+        </div>
+
+        <!-- Intereses -->
+        <div class="bg-gray-800/60 p-5 rounded-2xl hover:bg-gray-800 transition-all">
+          <p class="text-gray-400 text-sm">Intereses</p>
+
+          @if (campoEditando !== 'intereses') {
+            <div class="flex justify-between items-center mt-2">
+              <p class="text-lg font-medium">{{ usuario.intereses }}</p>
+              <button (click)="editar('intereses')" class="hover:scale-110 transition">
+                ✏️
+              </button>
+            </div>
+          } @else {
+            <div class="flex gap-2 mt-3">
+              <input type="text"
+                     [(ngModel)]="usuario.intereses"
+                     class="flex-1 px-4 py-2 rounded-xl bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-sky-500 outline-none">
+              <button (click)="guardar()" class="bg-sky-500 hover:bg-sky-600 px-4 rounded-xl">✔</button>
+              <button (click)="cancelar()" class="bg-gray-600 hover:bg-gray-500 px-4 rounded-xl">✖</button>
+            </div>
+          }
+        </div>
+
+        <!-- Email bloqueado -->
+        <div class="bg-gray-800/40 p-5 rounded-2xl border border-gray-700">
+          <p class="text-gray-400 text-sm">Correo Electrónico</p>
+          <p class="text-lg font-medium mt-2 text-gray-400">
+            {{ usuario.email }}
+          </p>
+          <p class="text-xs text-gray-500 mt-1">
+            El correo no puede modificarse
+          </p>
+        </div>
+
       </div>
 
-      <div class="info-item">
-        <span>Correo:</span>
-        <p>{{ usuario?.correo }}</p>
-      </div>
+    }
 
-      <div class="info-item">
-        <span>Membresía:</span>
-        <p>{{ usuario?.membresia }}</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="perfil-section">
-    <h2>Libros Prestados</h2>
-
-    <div *ngIf="librosPrestados?.length; else sinPrestados">
-      <ul>
-        <li *ngFor="let libro of librosPrestados">
-          {{ libro.titulo }}
-        </li>
-      </ul>
-    </div>
-
-    <ng-template #sinPrestados>
-      <p class="empty">No tienes libros prestados.</p>
-    </ng-template>
-  </div>
-
-  <div class="perfil-section">
-    <h2>Libros Favoritos</h2>
-
-    <div *ngIf="librosFavoritos?.length; else sinFavoritos">
-      <ul>
-        <li *ngFor="let favorito of librosFavoritos">
-          {{ favorito.titulo }}
-        </li>
-      </ul>
-    </div>
-
-    <ng-template #sinFavoritos>
-      <p class="empty">No tienes libros favoritos.</p>
-    </ng-template>
-  </div>
-
-  <div class="perfil-acciones">
-    <button class="btn-primary">Editar Perfil</button>
-    <button class="btn-danger">Cerrar Sesión</button>
   </div>
 
 </div>
+<app-footer></app-footer>
