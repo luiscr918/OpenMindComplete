@@ -1,4 +1,4 @@
-export type Rol = 'ADMIN' | 'AUTOR' | 'LECTOR';
+export type Rol = 'ADMIN' | 'LECTOR';
 // Ajusta según tu enum real
 
 export interface Usuario {

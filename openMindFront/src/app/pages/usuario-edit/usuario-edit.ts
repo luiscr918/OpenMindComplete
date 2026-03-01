@@ -17,15 +17,15 @@ export class UsuarioEdit implements OnInit {
   mensaje = signal('');
   cargando = signal(false);
   usuarioId!: number;
-  
+
   // Lista de roles para el select
-  roles: Rol[] = ['ADMIN', 'AUTOR', 'LECTOR'];
+  roles: Rol[] = ['ADMIN', 'LECTOR'];
 
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
     this.editForm = this.fb.group({
       email: [{ value: '', disabled: true }], // Campo deshabilitado
@@ -33,7 +33,7 @@ export class UsuarioEdit implements OnInit {
       ocupacion: [''],
       edad: [0, [Validators.required, Validators.min(0)]],
       intereses: [''],
-      rol: ['', [Validators.required]]
+      rol: ['', [Validators.required]],
     });
   }
 
@@ -44,7 +44,7 @@ export class UsuarioEdit implements OnInit {
         next: (usuario) => {
           this.editForm.patchValue(usuario);
         },
-        error: () => this.mensaje.set('Error al cargar el usuario')
+        error: () => this.mensaje.set('Error al cargar el usuario'),
       });
     }
   }
@@ -63,7 +63,7 @@ export class UsuarioEdit implements OnInit {
         error: (err) => {
           this.cargando.set(false);
           this.mensaje.set('Error al actualizar: ' + err.message);
-        }
+        },
       });
     }
   }
