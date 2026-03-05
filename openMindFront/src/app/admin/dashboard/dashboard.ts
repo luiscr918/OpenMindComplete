@@ -1,4 +1,12 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  CUSTOM_ELEMENTS_SCHEMA,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth-service';
@@ -13,11 +21,20 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink,FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // ← permite <openmind-dashboard>
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
+  ngOnInit() {
+    if (!document.querySelector('script[src*="openmind-dashboard"]')) {
+      const script = document.createElement('script');
+      script.src = 'http://localhost:5173/openmind-dashboard.js';
+      script.type = 'module';
+      document.head.appendChild(script);
+    }
+  }
   private authService = inject(AuthService);
   private usuarioService = inject(UsuarioService);
   private libroService = inject(LibroService);
