@@ -1,0 +1,192 @@
+/* ===== OpenMind Footer Animations (solo CSS) ===== */
+.om-footer {
+    isolation: isolate;
+}
+
+.om-blob {
+    animation: omBlob 10s ease-in-out infinite;
+    transform: translate3d(0, 0, 0);
+}
+
+.om-blob--b {
+    animation-delay: -3s;
+}
+
+@keyframes omBlob {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(18px, -14px) scale(1.08);
+    }
+}
+
+.om-float {
+    animation: omFloat 2.6s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes omFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.om-pulse {
+    animation: omPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes omPulse {
+
+    0%,
+    100% {
+        opacity: 0.55;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+.om-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 999px;
+    font-size: 11px;
+    color: rgba(226, 232, 240, 0.85);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    backdrop-filter: blur(8px);
+    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.om-pill:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(56, 189, 248, 0.35);
+}
+
+.om-icon-btn {
+    height: 40px;
+    width: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    color: rgba(226, 232, 240, 0.8);
+    text-decoration: none;
+    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.om-icon-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: rgba(125, 211, 252, 0.95);
+}
+
+.om-card {
+    border-radius: 16px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    backdrop-filter: blur(10px);
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.om-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(99, 102, 241, 0.35);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.om-link {
+    color: rgba(203, 213, 225, 0.85);
+    transition: color 180ms ease, transform 180ms ease;
+}
+
+.om-link:hover {
+    color: rgba(125, 211, 252, 0.95);
+    transform: translateX(2px);
+}
+
+.om-dot {
+    height: 6px;
+    width: 6px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.7);
+    transition: background 180ms ease, transform 180ms ease;
+}
+
+.om-link:hover .om-dot {
+    background: rgba(125, 211, 252, 0.95);
+    transform: scale(1.2);
+}
+
+.om-underline {
+    height: 1px;
+    width: 0;
+    background: rgba(125, 211, 252, 0.7);
+    margin-left: 6px;
+    transition: width 220ms ease;
+}
+
+.om-link:hover .om-underline {
+    width: 22px;
+}
+
+.om-cta {
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.9), rgba(99, 102, 241, 0.9));
+    box-shadow: 0 10px 30px rgba(56, 189, 248, 0.12);
+    transition: transform 180ms ease, filter 180ms ease;
+}
+
+.om-cta:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.om-arrow {
+    display: inline-block;
+    animation: omArrow 1.2s ease-in-out infinite;
+}
+
+@keyframes omArrow {
+
+    0%,
+    100% {
+        transform: translateX(0);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: translateX(4px);
+        opacity: 1;
+    }
+}
+
+/* Accesibilidad: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .om-blob,
+    .om-float,
+    .om-pulse,
+    .om-arrow {
+        animation: none !important;
+    }
+}
