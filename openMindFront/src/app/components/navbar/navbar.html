@@ -1,75 +1,155 @@
-<nav class="flex items-center justify-between px-10 h-20 bg-slate-900 text-white">
+<nav class="om-nav sticky top-0 z-50">
+  <!-- Fondo / blur / borde -->
+  <div class="relative bg-slate-950/80 backdrop-blur-xl border-b border-white/10">
+    <!-- glow decorativo -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="absolute -top-14 -left-14 h-40 w-40 rounded-full bg-sky-400/15 blur-3xl"></div>
+      <div class="absolute -top-20 right-10 h-48 w-48 rounded-full bg-indigo-400/10 blur-3xl"></div>
+      <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent">
+      </div>
+    </div>
 
-  <!-- Logo -->
-  <div>
-    <a routerLink="/" class="text-2xl font-bold text-sky-400 no-underline">🧠 OpenMind</a>
+    <div class="relative flex items-center justify-between px-6 md:px-10 h-20 text-white">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <a routerLink="/" class="group inline-flex items-center gap-2 no-underline">
+          <span
+            class="om-logo-chip inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white/5 border border-white/10">
+            <span class="om-float text-xl">🧠</span>
+          </span>
+
+          <span class="text-2xl font-extrabold tracking-tight">
+            <span class="bg-gradient-to-r from-sky-300 via-sky-400 to-indigo-300 bg-clip-text text-transparent">
+              OpenMind
+            </span>
+          </span>
+
+          <span
+            class="ml-2 hidden sm:inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-slate-300">
+            Biblioteca virtual
+          </span>
+        </a>
+      </div>
+
+      <!-- Menu central -->
+      <div class="hidden lg:flex items-center gap-1">
+        <!-- Inicio -->
+        <a routerLink="/" routerLinkActive="om-active" [routerLinkActiveOptions]="{exact: true}" class="om-link">
+          <span class="om-link-inner">Inicio</span>
+          <span class="om-underline"></span>
+        </a>
+
+        @for (item of menuPrincipal; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="om-active" class="om-link">
+          <span class="om-link-inner">{{ item.label }}</span>
+          <span class="om-underline"></span>
+        </a>
+        }
+
+        @if (estaLogueado()) {
+        <a (click)="irAMisPrestamos()" class="om-link cursor-pointer">
+          <span class="om-link-inner">Mis Préstamos</span>
+          <span class="om-underline"></span>
+        </a>
+        }
+
+        @if (esAdmin()) {
+        <a routerLink="/dashboard" routerLinkActive="om-active" class="om-link">
+          <span class="om-link-inner">Dashboard</span>
+          <span class="om-underline"></span>
+        </a>
+        }
+
+        @if (esLector()) {
+        <a routerLink="/perfil" routerLinkActive="om-active" class="om-link">
+          <span class="om-link-inner">Perfil</span>
+          <span class="om-underline"></span>
+        </a>
+        }
+      </div>
+
+      <!-- Nav derecha -->
+      <div class="flex items-center gap-3 md:gap-4">
+        @if (usuarioFirebase() === undefined) {
+        <span class="inline-flex items-center gap-2 text-slate-400 text-sm">
+          <span class="om-dot"></span>
+          Cargando...
+        </span>
+        }
+
+        @else if (usuarioFirebase() === null) {
+        <a routerLink="/login" class="om-ghost-btn no-underline">
+          Login
+        </a>
+
+        <a routerLink="/registro" class="om-primary-btn no-underline">
+          Registro
+          <span class="om-arrow">→</span>
+        </a>
+        }
+
+        @else {
+        <div class="hidden md:flex items-center gap-3">
+          <div class="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+            <span
+              class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500/80 to-indigo-500/80 text-white text-sm font-bold">
+              {{ (usuarioDB()?.nombreCompleto ?? usuarioFirebase()?.email)?.slice(0,1) }}
+            </span>
+            <span class="text-slate-200 text-sm max-w-[220px] truncate">
+              {{ usuarioDB()?.nombreCompleto ?? usuarioFirebase()?.email }}
+            </span>
+          </div>
+
+          <button (click)="logout()" class="om-danger-btn border-none cursor-pointer">
+            Salir
+          </button>
+        </div>
+
+        <!-- versión compacta móvil -->
+        <div class="md:hidden flex items-center gap-2">
+          <span class="text-slate-300 text-sm max-w-[140px] truncate">
+            {{ usuarioDB()?.nombreCompleto ?? usuarioFirebase()?.email }}
+          </span>
+          <button (click)="logout()" class="om-danger-btn border-none cursor-pointer">
+            Salir
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Menú móvil simple (solo visual; no cambia lógica de rutas) -->
+    <div class="lg:hidden border-t border-white/10">
+      <div class="flex items-center gap-2 px-6 py-3 overflow-x-auto">
+        <a routerLink="/" routerLinkActive="om-active-chip" [routerLinkActiveOptions]="{exact: true}"
+          class="om-chip no-underline">
+          Inicio
+        </a>
+
+        @for (item of menuPrincipal; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="om-active-chip" class="om-chip no-underline">
+          {{ item.label }}
+        </a>
+        }
+
+        @if (estaLogueado()) {
+        <a (click)="irAMisPrestamos()" class="om-chip no-underline cursor-pointer">
+          Mis Préstamos
+        </a>
+        }
+
+        @if (esAdmin()) {
+        <a routerLink="/dashboard" routerLinkActive="om-active-chip" class="om-chip no-underline">
+          Dashboard
+        </a>
+        }
+
+        @if (esLector()) {
+        <a routerLink="/perfil" routerLinkActive="om-active-chip" class="om-chip no-underline">
+          Perfil
+        </a>
+        }
+      </div>
+    </div>
   </div>
-
-  <!-- Menu central -->
-  <div class="flex items-center gap-6">
-    <a routerLink="/" routerLinkActive="border-b-2 border-sky-400 text-sky-400"
-      [routerLinkActiveOptions]="{exact: true}"
-      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
-      Inicio
-    </a>
-
-    @for (item of menuPrincipal; track item.path) {
-    <a [routerLink]="item.path" routerLinkActive="border-b-2 border-sky-400 text-sky-400"
-      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
-      {{ item.label }}
-    </a>
-    }
-
-    @if (estaLogueado()) {
-    <a (click)="irAMisPrestamos()"
-      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1 cursor-pointer">
-      Mis Préstamos
-    </a>
-    }
-
-    @if (esAdmin()) {
-    <a routerLink="/dashboard" routerLinkActive="border-b-2 border-sky-400 text-sky-400"
-      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
-      Dashboard
-    </a>
-    }
-    @if (esLector()) {
-  <a routerLink="/perfil"
-     routerLinkActive="border-b-2 border-sky-400 text-sky-400"
-     class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200 pb-1">
-     Perfil
-  </a>
-}
-  </div>
-
-  <!-- Nav derecha -->
-  <div class="flex items-center gap-4">
-
-    @if (usuarioFirebase() === undefined) {
-    <span class="text-slate-400 text-sm">Cargando...</span>
-    }
-
-    @else if (usuarioFirebase() === null) {
-    <a routerLink="/login"
-      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200">
-      Login
-    </a>
-    <a routerLink="/registro"
-      class="text-white font-medium no-underline hover:text-sky-400 transition-colors duration-200">
-      Registro
-    </a>
-    }
-
-    @else {
-    <span class="text-slate-300 text-sm">
-      {{ usuarioDB()?.nombreCompleto ?? usuarioFirebase()?.email }}
-    </span>
-    <button (click)="logout()"
-      class="bg-red-500 hover:opacity-85 text-white px-3 py-1.5 rounded-md text-sm transition-opacity duration-200 cursor-pointer border-none">
-      Salir
-    </button>
-    }
-
-  </div>
-
 </nav>

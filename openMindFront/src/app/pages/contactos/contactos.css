@@ -1,30 +1,44 @@
-.contacto-container {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: Arial, Helvetica, sans-serif;
+.contacto {
+  max-width: 720px;
+  margin: 40px auto 60px;
+  padding: 0 18px;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
 }
 
-h1 {
+/* encabezado */
+.contacto-header {
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 10px;
+  margin-bottom: 26px;
 }
 
-p {
-  text-align: center;
-  color: #555;
-  margin-bottom: 30px;
+.contacto-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
 }
 
+.contacto-header p {
+  color: #475569;
+}
+
+/* formulario */
 .contacto-form {
+  background: white;
+  padding: 26px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  gap: 16px;
+}
+
+/* fila doble */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
 .form-group {
@@ -33,50 +47,70 @@ p {
 }
 
 .form-group label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #34495e;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #334155;
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 10px;
+  padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #cbd5e1;
   font-size: 14px;
+  transition: border-color .2s ease;
 }
 
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* botón */
 button {
+  margin-top: 6px;
   padding: 12px;
   border: none;
-  border-radius: 8px;
-  background-color: #3498db;
+  border-radius: 10px;
+  background: #2563eb;
   color: white;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-button:disabled {
-  background-color: #7f8c8d;
-  cursor: not-allowed;
+  transition: background .2s ease;
 }
 
 button:hover:enabled {
-  background-color: #2980b9;
+  background: #1d4ed8;
 }
 
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* info adicional */
 .info-adicional {
   margin-top: 30px;
   text-align: center;
 }
 
 .info-adicional h2 {
+  font-size: 20px;
   margin-bottom: 10px;
-  color: #2c3e50;
+  color: #0f172a;
 }
 
-.info-adicional p {
-  margin: 5px 0;
-  color: #555;
+.contacto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #475569;
+}
+
+/* responsive */
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }

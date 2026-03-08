@@ -1,45 +1,178 @@
 <app-navbar></app-navbar>
-<div class="home-container">
-  <!-- Hero principal -->
+
+<div class="home">
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-text">
-      <h1>Bienvenido a Bibliotech</h1>
-      <p>Tu biblioteca virtual con miles de libros disponibles para préstamo digital.</p>
-      <div class="hero-buttons">
-        <button routerLink="/catalogo">Explorar Catálogo</button>
-        <button routerLink="/perfil">Mi Perfil</button>
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          Biblioteca virtual • Préstamo digital
+        </div>
+
+        <h1>Bienvenido a <span>Bibliotech</span></h1>
+
+        <p>
+          Tu biblioteca virtual para explorar, guardar y solicitar préstamos digitales.
+          Lecturas organizadas, accesibles y listas para ti.
+        </p>
+
+        <div class="hero-buttons">
+          <button class="btn btn-primary" routerLink="/catalogo">
+            Explorar Catálogo <span class="arrow">→</span>
+          </button>
+          <button class="btn btn-secondary" routerLink="/perfil">
+            Mi Perfil
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-value">+1.000</div>
+            <div class="stat-label">Títulos disponibles</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Acceso</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">Seguro</div>
+            <div class="stat-label">Cuenta protegida</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="hero-imagen">
-      <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80"
-        alt="Libros virtuales">
+
+      <div class="hero-image">
+        <div class="image-frame">
+          <img
+            src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=1200&q=80"
+            alt="Libros virtuales">
+        </div>
+
+        <div class="floating-card">
+          <div class="fc-icon">📚</div>
+          <div class="fc-text">
+            <div class="fc-title">Explora por categorías</div>
+            <div class="fc-sub">Novelas, ciencia, historia, tecnología…</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Sección de características -->
+  <!-- FEATURES -->
   <section class="features">
-    <h2>¿Por qué elegirnos?</h2>
+    <div class="section-head">
+      <h2>¿Por qué elegirnos?</h2>
+      <p>Todo lo que necesitas para gestionar tus lecturas, en un solo lugar.</p>
+    </div>
+
     <div class="features-grid">
       <div class="feature-card">
+        <div class="icon">⚡</div>
         <h3>Préstamo Digital</h3>
         <p>Accede a tus libros favoritos en cualquier momento y desde cualquier dispositivo.</p>
       </div>
+
       <div class="feature-card">
+        <div class="icon">🧠</div>
         <h3>Variedad de Catálogo</h3>
         <p>Novelas, ciencia, historia, tecnología y mucho más en un solo lugar.</p>
       </div>
+
       <div class="feature-card">
+        <div class="icon">👤</div>
         <h3>Perfil Personalizado</h3>
         <p>Administra tus préstamos, favoritos y recomendaciones en tu cuenta.</p>
       </div>
     </div>
   </section>
 
-  <!-- Llamada a la acción -->
-  <section class="cta">
-    <h2>¡Comienza a leer hoy mismo!</h2>
-    <button routerLink="/catalogo">Ver Catálogo</button>
+  <!-- NUEVA SECCIÓN -->
+  <section class="collections">
+    <div class="section-head">
+      <h2>Descubre nuevas lecturas</h2>
+      <p>
+        Explora espacios, géneros y colecciones pensadas para que tu experiencia
+        de lectura sea más cómoda, visual y organizada.
+      </p>
+    </div>
+
+    <div class="collections-grid">
+      <article class="collection-card collection-card-large">
+        <img
+          src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&q=80"
+          alt="Biblioteca con estanterías">
+        <div class="collection-overlay">
+          <span class="collection-tag">Biblioteca digital</span>
+          <h3>Un espacio para leer, descubrir y aprender</h3>
+          <p>
+            Encuentra títulos recomendados, explora nuevas categorías y mantén tus lecturas organizadas.
+          </p>
+        </div>
+      </article>
+
+      <article class="collection-card">
+        <img
+          src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80"
+          alt="Libros abiertos sobre una mesa">
+        <div class="collection-body">
+          <h3>Lectura flexible</h3>
+          <p>Consulta tu catálogo desde casa, la universidad o cualquier dispositivo.</p>
+        </div>
+      </article>
+
+      <article class="collection-card">
+        <img
+          src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=900&q=80"
+          alt="Persona leyendo un libro">
+        <div class="collection-body">
+          <h3>Recomendaciones para ti</h3>
+          <p>Organiza tus intereses y encuentra libros alineados con tus gustos.</p>
+        </div>
+      </article>
+    </div>
   </section>
 
+  <!-- SECCIÓN EXTRA SIMPLE -->
+  <section class="reading-strip">
+    <div class="reading-text">
+      <span class="mini-badge">Experiencia de lectura</span>
+      <h2>Más que una biblioteca, un espacio para tu aprendizaje</h2>
+      <p>
+        Gestiona tus préstamos, guarda tus favoritos y mantén tus lecturas siempre al alcance.
+      </p>
+    </div>
+
+    <div class="reading-gallery">
+      <div class="gallery-card">
+        <img
+          src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=900&q=80"
+          alt="Estanterías de libros">
+      </div>
+      <div class="gallery-card">
+        <img
+          src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=900&q=80"
+          alt="Persona leyendo en biblioteca">
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>¡Comienza a leer hoy mismo!</h2>
+        <p>Explora el catálogo y encuentra tu próxima lectura en minutos.</p>
+      </div>
+
+      <button class="btn btn-cta" routerLink="/catalogo">
+        Ver Catálogo <span class="arrow">→</span>
+      </button>
+    </div>
+  </section>
 </div>
+
 <app-footer></app-footer>
