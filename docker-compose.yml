@@ -33,6 +33,13 @@ services:
       - "4200:80"
     depends_on:
       - app
-
+  # Nuevo servicio dashboard react
+  dashboard:
+    build: ./open-mind-stats
+    container_name: openmind_dashboard
+    ports:
+      - "5173:80"
+    depends_on:
+      - app
 volumes:
   postgres_data:
