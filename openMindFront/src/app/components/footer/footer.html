@@ -1,46 +1,133 @@
-<footer class="bg-[#1e1e2f] text-white pt-10 pb-4 mt-16">
+<footer class="om-footer relative mt-16 overflow-hidden bg-[#0f1020] text-white">
+  <!-- fondo decorativo animado -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="om-blob om-blob--a absolute -top-28 -left-28 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl"></div>
+    <div class="om-blob om-blob--b absolute -bottom-28 -right-28 h-72 w-72 rounded-full bg-indigo-500/15 blur-3xl"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-white/[0.05] via-transparent to-transparent"></div>
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/25 to-transparent"></div>
+  </div>
 
-  <div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-between gap-10">
+  <div class="relative max-w-6xl mx-auto px-6 pt-12 pb-8">
+    <div class="flex flex-wrap justify-between gap-10">
 
-    <!-- Marca -->
-    <div class="flex-1 min-w-55">
-      <h3 class="text-xl font-bold text-sky-400 mb-3">🧠 OpenMind</h3>
-      <p class="text-slate-400 text-sm leading-relaxed">
-        Biblioteca virtual diseñada para expandir tu conocimiento
-        y conectar mentes curiosas.
+      <!-- Marca -->
+      <div class="flex-1 min-w-[240px]">
+        <div class="flex items-center gap-3 mb-3">
+          <h3 class="text-2xl font-extrabold tracking-tight">
+            <span class="inline-block om-float">🧠</span>
+            <span class="bg-gradient-to-r from-sky-300 via-sky-400 to-indigo-300 bg-clip-text text-transparent">
+              OpenMind
+            </span>
+          </h3>
+
+          <span
+            class="inline-flex items-center rounded-full border border-slate-700/70 bg-white/5 px-2.5 py-1 text-[11px] text-slate-200/80 backdrop-blur">
+            Biblioteca virtual
+          </span>
+        </div>
+
+        <p class="text-slate-300/80 text-sm leading-relaxed max-w-sm">
+          Biblioteca virtual diseñada para expandir tu conocimiento y conectar mentes curiosas.
+        </p>
+
+        <!-- redes (placeholder) -->
+        <div class="mt-6 flex items-center gap-3">
+          <a href="#" class="om-icon-btn" aria-label="X">
+            <span class="font-semibold">𝕏</span>
+          </a>
+          <a href="#" class="om-icon-btn" aria-label="LinkedIn">
+            <span class="font-semibold">in</span>
+          </a>
+          <a href="#" class="om-icon-btn" aria-label="Instagram">
+            <span class="font-semibold">ig</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navegación -->
+      <div class="flex-1 min-w-[200px]">
+        <h4 class="font-semibold text-white mb-4 flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-sky-400 om-pulse"></span>
+          Explorar
+        </h4>
+
+        <ul class="space-y-2">
+          <li>
+            <a routerLink="/"
+              class="om-link group inline-flex items-center gap-2 text-sm no-underline">
+              <span class="om-dot"></span>
+              Inicio
+              <span class="om-underline"></span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/catalogo"
+              class="om-link group inline-flex items-center gap-2 text-sm no-underline">
+              <span class="om-dot"></span>
+              Catálogo
+              <span class="om-underline"></span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/nosotros"
+              class="om-link group inline-flex items-center gap-2 text-sm no-underline">
+              <span class="om-dot"></span>
+              Nosotros
+              <span class="om-underline"></span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/contactos"
+              class="om-link group inline-flex items-center gap-2 text-sm no-underline">
+              <span class="om-dot"></span>
+              Contactos
+              <span class="om-underline"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div class="flex-1 min-w-[240px]">
+        <h4 class="font-semibold text-white mb-4 flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-indigo-400 om-pulse"></span>
+          Contacto
+        </h4>
+
+        <div class="space-y-3">
+          <div class="om-card">
+            <p class="text-[11px] text-slate-400">Email</p>
+            <p class="text-sm text-slate-100">soporte@openmind.com</p>
+          </div>
+
+          <div class="om-card">
+            <p class="text-[11px] text-slate-400">Ubicación</p>
+            <p class="text-sm text-slate-100">Quito - Ecuador</p>
+          </div>
+        </div>
+
+        <!-- mini CTA -->
+        <div class="mt-4">
+          <a routerLink="/contactos"
+            class="om-cta inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-white no-underline">
+            Escríbenos
+            <span class="ml-2 om-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- barra inferior -->
+    <div class="mt-10 border-t border-slate-800/80 pt-5 text-center">
+      <p class="text-slate-500 text-xs">
+        © 2026 OpenMind — Todos los derechos reservados
       </p>
-    </div>
 
-    <!-- Navegación -->
-    <div class="flex-1 min-w-45">
-      <h4 class="font-semibold text-white mb-3">Explorar</h4>
-      <ul class="space-y-2">
-        <li><a routerLink="/"
-            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Inicio</a>
-        </li>
-        <li><a routerLink="/catalogo"
-            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Catálogo</a>
-        </li>
-        <li><a routerLink="/nosotros"
-            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Nosotros</a>
-        </li>
-        <li><a routerLink="/contactos"
-            class="text-slate-400 hover:text-sky-400 transition-colors duration-200 no-underline text-sm">Contactos</a>
-        </li>
-      </ul>
+      <div class="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs">
+        <a routerLink="/terminos" class="text-slate-400 hover:text-sky-300 transition no-underline">Términos</a>
+        <a routerLink="/privacidad" class="text-slate-400 hover:text-sky-300 transition no-underline">Privacidad</a>
+        <a routerLink="/ayuda" class="text-slate-400 hover:text-sky-300 transition no-underline">Ayuda</a>
+      </div>
     </div>
-
-    <!-- Contacto -->
-    <div class="flex-1 min-w-50">
-      <h4 class="font-semibold text-white mb-3">Contacto</h4>
-      <p class="text-slate-400 text-sm mb-1">Email: soporte@openmind.com</p>
-      <p class="text-slate-400 text-sm">Quito - Ecuador</p>
-    </div>
-
   </div>
-
-  <div class="border-t border-slate-700 mt-8 pt-4 text-center text-slate-500 text-sm">
-    © 2026 OpenMind - Todos los derechos reservados
-  </div>
-
 </footer>

@@ -9,11 +9,13 @@ import { UsuarioService } from '../../services/usuario-service';
 import { AuthService } from '../../services/auth-service';
 import { PrestamoService } from '../../services/prestamo-service';
 import { Prestamo } from '../../../models/prestamo.model';
+import { Navbar } from '../../components/navbar/navbar';
+import { Footer } from '../../components/footer/footer';
 
 @Component({
   selector: 'app-register-prestamo',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Navbar, Footer],
   templateUrl: './register-prestamo.html',
   styleUrl: './register-prestamo.css',
 })
@@ -97,8 +99,8 @@ export class RegisterPrestamo implements OnInit {
   guardarPrestamo(usuarioId: number) {
     this.prestamoService.create(this.nuevoPrestamo).subscribe({
       next: () => {
-        // ⭐ sin alert
-        this.router.navigate([`/mis-prestamos/${usuarioId}`]); // ir a lista y ver el nuevo
+        alert('Préstamo registrado exitosamente'); 
+        this.router.navigate([`/mis-prestamos/${usuarioId}`]);
       },
       error: (err) => console.error('Error al crear préstamo', err),
     });
